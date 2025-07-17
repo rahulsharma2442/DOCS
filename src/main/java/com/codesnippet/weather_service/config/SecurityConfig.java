@@ -23,7 +23,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
-        http.authorizeHttpRequests(auth->auth.requestMatchers("h2-console/**").permitAll()
+        http.authorizeHttpRequests(auth->auth.requestMatchers("h2-console/**","/authenticate/**").permitAll()
         .anyRequest().authenticated())
         .httpBasic(withDefaults());
         return http.build();
@@ -33,6 +33,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // authentication manager bean for the simple authentication. validate user using username and password.
     @Bean
     public AuthenticationManager authenticationManager(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
